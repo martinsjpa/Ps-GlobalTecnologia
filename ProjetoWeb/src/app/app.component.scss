@@ -1,0 +1,153 @@
+//COLORS
+$blue:#2b2a29;
+$red: #f05050;
+$white: #fff;
+$border-color: rgba(0,0,0,.12);
+
+// Text COLORS
+
+.text-blue {
+    color: $blue;
+}
+.text-red {
+    color: $red;
+}
+.text-white{
+    color:$white;
+}
+
+
+
+
+//BUTTONS HOVER
+$button-blue-hover: #176fe3;
+
+// Backgrounds
+.bg-blue {
+    background-color: #2b2a29;
+}
+
+
+
+//Separadores
+
+.br { border-right: 1px solid $border-color;}
+.bl { border-left: 1px solid $border-color;}
+.bt { border-top: 1px solid $border-color;}
+.bb { border-bottom: 1px solid $border-color;}
+
+
+//Text type
+
+.text-nowrap { white-space: nowrap; }
+
+.text-bold   { font-weight: 500 !important; }
+
+
+
+/* heading tags */
+
+h1,h2,h3,h4 {
+    font-weight: bold;
+}
+.h3, h3 {
+    font-size: 24px;
+}
+
+h1,h2,h3,h4,h5,h6,
+.h1,.h2,.h3,.h4,.h5,.h6 {
+    margin-bottom: 0.65625rem;
+}
+
+
+/* Body */
+body{
+    background-color: #f5f5f5!important;
+}
+
+/* Buttons */
+
+.btn {
+    border-radius: 0;
+    
+    &:hover, &:focus {
+        box-shadow: none;     
+        outline: 0; 
+    }
+}
+
+
+.btn-blue {
+    background-color: $blue!important;
+    color: $blue!important;
+
+   
+}
+
+
+/* Circles */
+
+
+.circle-black{
+    width: 31px;
+    height: 29px;
+    border-radius: 50%!important;
+    background-color: #454647!important;
+
+}
+.circle-red{
+    width: 31px;
+    height: 29px;
+    border-radius: 50%!important;
+    background-color: #F05050!important;
+}
+
+/* Icons Aligns */
+
+.fa-pen:before {
+    position: relative; 
+    top: -6px; 
+    right: 3px;
+}
+.fa-trash:before{
+    position: relative; 
+    top: -6px; 
+    right: 3px;
+
+}
+
+/*Datapicker*/
+
+.theme-blue .bs-datepicker-head {
+    background-color: #054483;
+}
+
+.theme-blue .bs-datepicker-body table td.week span {
+    color: #054483;
+}
+
+/* navbar */
+
+.navbar {
+    height: 53px;
+}
+
+/* Logo*/
+.logo{
+    height: 26px;
+}
+
+/* List Group*/
+
+.list-group-item{
+    background: #F8F8F8;
+}
+
+.list-group-item.first-item {
+    background: #F8F8F8;
+}
+
+/*Pagination */
+.ngx-pagination .current {
+    background:#054483!important ;
+}

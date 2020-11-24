@@ -1,0 +1,122 @@
+<div class="col-12 px-4">
+    <!--Background-->
+    <div class="b bg-white px-4 py-3">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h3 class="text-blue">Lembrete</h3>
+            </div>
+            <!--Button new employee-->
+            <div class="col-6 mt-4 mt-md-0 text-right">
+                <button class="btn btn-blue text-nowrap" (click)="openModalReminder(null)">
+                    <span class="text-white text-bold">
+                        <i class="fas fa-angle-down pr-2"></i>
+                        Novo Lembrete
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="list-group mt-4">
+            <!--Labels-->
+            <div class="list-group-item first-item text-left text-bold d-md-block px-0 px-md-0">
+                <div class="row ml-0">
+                    <!--Name-->
+                    <div class="col-12 col-md-3">
+                        Título
+                    </div>
+                    <!--Email-->
+                    <div class="col-12 col-md-7  mt-2 mt-md-0">
+                        Conteudo
+                    </div>
+                    <!--Cpf-->
+                    <div class="col-12 col-md-1  mt-2 mt-md-0">
+                        Prioridade
+                    </div>
+                    
+                    <!--Actions-->
+                    <div class="col-12 col-md-1 text-nowrap  mt-2 mt-md-0">
+                        Ações
+                    </div>
+                </div>
+            </div>
+            <!--Contentddddddddd-->
+            <div *ngFor="let reminder of reminders | paginate: { id: 'lstPagination', itemsPerPage:itemsPage, currentPage:page, totalItems:reminders.length}"
+                class="list-group-item list-group-item-action text-left px-0 px-md-0">
+                <div class="row ml-0 ">
+                    <!--Name-->
+                    <div class="col-12 col-md-3">
+                        {{reminder.title}}
+                    </div>
+                    <!--Email-->
+                    <div class="col-12 col-md-7 mt-1 mt-md-0">
+                        {{reminder.content}}
+                    </div>
+                    <!--Cpf-->
+                    <div class="col-12 col-md-1 mt-1 mt-md-0">
+                        {{reminder.priority}}
+                    </div>
+                    
+                    <!--Actions-->
+                    <div class="col-12 col-md-1 align-self-center mt-2 mt-md-0 pl-md-2">
+                        <button class="btn circle-black mr-2" type="button" (click)="openModalReminder(reminder)">
+                            <em class="fas fa-pen fa-xs text-white">
+                            </em>
+                        </button>
+                        <button class="btn circle-red mr-2" type="button" (click)="deleteReminder(reminder)">
+                            <em class="fas fa-trash fa-xs text-white">
+                            </em>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--Pagination-->
+            <div class="col-12 mt-4 text-center d-none d-md-block text-nowrap">
+                <pagination-controls id="lstPagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"
+                    autoHide="true" previousLabel="Anterior" nextLabel="Proximo">
+                </pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Start Modal-->
+<ng-template #modalReminder>
+    <!--Modal Header-->
+    <div class="modal-header">
+        <h3 class="modal-title text-blue">{{reminderId? "Editar Lembrete": "Criar Lembrete"}}</h3>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal(modalReminderRef)">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--Modal Body-->
+    <div class="modal-body">
+        <!--Init form Edit employee and Inputs-->
+        <form [formGroup]="form">
+            <!--Name-->
+            <div class="col-12">
+                <label class="text-bold" for="title">Titulo</label>
+                <input class="form-control" name="title" type="text" formControlName="title" />
+            </div>
+            <!--Cpf-->
+            <div class="col-12 mt-2">
+                <label class="text-bold" for="content">Conteúdo</label>
+                <textarea class="form-control" id="content" formControlName="content" rows="3"></textarea>
+            </div>
+            <!--Salary-->
+            <div class="col-12 mt-2 mb-4">
+                <label class="text-bold" for="priority">Prioridade </label>
+                <ng-select [items]="prioritys" bindLabel="name" bindValue="id" formControlName="priority"></ng-select>
+            </div>
+            <!--Separator-->
+            <hr class="bb mx-0 px-0">
+            <!--Button Save-->
+            <div class="col-12 text-center mt-4">
+                <button placement="bottom" class="btn btn-blue text-white" (click)="checkSaveOrEdit()"><span
+                        class="text-white text-bold">Save</span></button>
+            </div>
+        </form>
+        <!--End Form edit employee-->
+    </div>
+</ng-template>
+<!--End Modal-->
