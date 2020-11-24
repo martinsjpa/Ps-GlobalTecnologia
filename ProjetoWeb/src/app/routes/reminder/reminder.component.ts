@@ -169,19 +169,20 @@ export class ReminderComponent implements OnInit {
   /**Fecha a modal */ 
   closeModal(modalRef: BsModalRef)
   {
+    this.reminderId = null;
     modalRef.hide();
   }
 
   /** Verifica se a modal aberta foi para criação ou edição */
   checkSaveOrEdit()
   {
-    this.closeModal(this.modalReminderRef);
     if(this.reminderId == null){
       this.saveReminder();
     }
     else{
       this.editReminder();
     }
+    this.closeModal(this.modalReminderRef);
   }
 
   filter(value){
