@@ -9,11 +9,16 @@
             <div class="col-6 mt-4 mt-md-0 text-right">
                 <button class="btn btn-blue text-nowrap" (click)="openModalReminder(null)">
                     <span class="text-white text-bold">
-                        <i class="fas fa-angle-down pr-2"></i>
+                        <i class="fa fa-plus pr-2"></i>
                         Novo Lembrete
                     </span>
                 </button>
             </div>
+            <div class="col-4">
+                <input #search class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" (keyup)="filter($event)">
+                
+            </div>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="filter(search.value)">Search</button>
         </div>
 
         <div class="list-group mt-4">

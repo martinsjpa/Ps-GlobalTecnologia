@@ -15,6 +15,7 @@ export class ReminderComponent implements OnInit {
 
   form: FormGroup;
   reminders: Array<Reminder> = new Array<Reminder>();
+  remindersTemp = this.reminders;
 
   prioritys = [{
     "id":1,
@@ -34,7 +35,7 @@ export class ReminderComponent implements OnInit {
   page: number = 1;
 
   /* Responsável por controlar a quantidade de colaboradores por pagina */
-  itemsPage: number = 7;
+  itemsPage: number = 6;
   reminderId: any = null;
     
   
@@ -172,6 +173,11 @@ export class ReminderComponent implements OnInit {
     else{
       this.editReminder();
     }
+  }
+
+  filter(value){
+    this.reminders = this.remindersTemp;
+    this.reminders = this.reminders.filter(x=> x.content.toLowerCase().indexOf(value.target.value.toLowerCase())>-1);
   }
 
 
