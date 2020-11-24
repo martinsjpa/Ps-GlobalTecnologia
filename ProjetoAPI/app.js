@@ -53,7 +53,7 @@ app.listen(8080, ()=> {
 
 /*Faz um selectAll na tabela de employee no MongoDb  */
 app.get("/getReminder", (req, res) =>{
-    Reminder.find({}).then((reminder) => {
+    Reminder.find({}).sort('-priority').then((reminder) => {
         return res.json(reminder);
     }).catch((erro) => {
         return res.status(200).json({
