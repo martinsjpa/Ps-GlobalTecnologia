@@ -12,11 +12,15 @@ import Swal from 'sweetalert2';
 })
 export class ReminderComponent implements OnInit {
 
-
+  /*Responsável pelo form create e edit */
   form: FormGroup;
+  /*Array com todos os Reminders */
   reminders: Array<Reminder> = new Array<Reminder>();
+  /*Variavel responsável por auxiliar no filtro  */
   remindersTemp = this.reminders;
 
+  // As prioridades que serão utilizadas na modal create e edit.
+  // Utilizei Json mas era possível colocar no banco ou fazer um array do tipo priority
   prioritys = [{
     "id":1,
     "name":"Baixa"
@@ -31,15 +35,16 @@ export class ReminderComponent implements OnInit {
   }
 ];
 
-  /* Responsável pela paginação da listagem de colaboradores */
+  /* Responsável pela paginação da listagem de Lembretes */
   page: number = 1;
 
-  /* Responsável por controlar a quantidade de colaboradores por pagina */
+  /* Responsável por controlar a quantidade de Lembrets por pagina */
   itemsPage: number = 6;
+  /*Auxilia na edição de Lembretes */
   reminderId: any = null;
     
   
-
+  /*ViewChild para a modal que está no html */
   @ViewChild('modalReminder', { static: false }) modalReminder: TemplateRef<any>;
   // Referencia para a modal
   modalReminderRef: BsModalRef;
@@ -49,6 +54,7 @@ export class ReminderComponent implements OnInit {
     this.getReminder();
   }
 
+  /** Inicializa o FormGroup para criação de novo lembrete */ 
   initFormGroup()
   {
     this.form = new FormGroup({
@@ -57,6 +63,7 @@ export class ReminderComponent implements OnInit {
       priority: new FormControl(null,Validators.required)
     })
   }
+  /**Inicializa o formGroup para edição de Lembrete */
   initFormGroupEdit(reminder: Reminder)
   {
     this.form = new FormGroup({
@@ -66,39 +73,39 @@ export class ReminderComponent implements OnInit {
     })
   }
 
-
+  /** Busca na base todos os lembretes eles são ordenados no back por prioridade */
   getReminder() {
     this.cadastroService.get().subscribe(
       (response) => {
         Object.assign(this.reminders, response);
       },
       (error) => {
-        Swal.fire('Error', 'Não foi possível Carregar os Colaboradores', 'error');
+        Swal.fire('Error', 'Não foi possível Carregar os Lembretes', 'error');
       }
     );
   }
-  /**Envia para a Api o novo colaborador para que ela faça a criação */ 
+  /**Envia para a Api o novo Lembrete */ 
   saveReminder() {
     let employeeForm = this.form.value as Reminder;
     this.cadastroService.save(employeeForm).subscribe(
       (response) => {
-        Swal.fire('Success', 'Colaborador Cadastrado com Sucesso', 'success');
+        Swal.fire('Success', 'lembrete Cadastrado com Sucesso', 'success');
         this.getReminder();
       },
       (error) => {
-        Swal.fire('Error', 'Não foi possível Cadastrar o Colaborador', 'error');
+        Swal.fire('Error', 'Não foi possível Cadastrar o Lembrete', 'error');
       }
     );
     this.form.reset();
   }
-  /**Envia para a Api o colaborador que foi deletado */ 
+  /**Envia para a Api o Lembrete que foi deletado */ 
   deleteReminder(reminder: Reminder) 
   {
     Swal.fire({
-      text: `Deseja deletar o colaborador ${reminder.title}?`,
+      text: `Deseja deletar o Lembrete ${reminder.title}?`,
       icon:"warning",
       confirmButtonColor: "#f05050",
-      confirmButtonText: "Deletar Colaborador",
+      confirmButtonText: "Deletar Lembrete",
       cancelButtonColor: "Cancelar",
       iconColor: "#f05050",
       showCancelButton: true,
@@ -112,11 +119,11 @@ export class ReminderComponent implements OnInit {
             let find = this.reminders.find(x => x._id == reminder._id);
             let index = this.reminders.indexOf(find);
             this.reminders.splice(index,1);
-            Swal.fire('Success', 'Colaborador Excluido com Sucesso', 'success');
+            Swal.fire('Success', 'Lembrete Excluido com Sucesso', 'success');
             
           },
           (error) => {
-            Swal.fire('Error', 'Não foi possível Excluir o Colaborador', 'error');
+            Swal.fire('Error', 'Não foi possível Excluir o Lembrete', 'error');
           }
         );
       }
@@ -124,24 +131,25 @@ export class ReminderComponent implements OnInit {
 
   }
 
-  /**Envia para a api o colaborador que foi editado e suas alterações */ 
+  /**Envia para a api o Lembrete que foi editado e suas alterações */ 
   editReminder() {
 
     let reminder = this.form.value as Reminder;
     reminder._id = this.reminderId;
     this.cadastroService.edit(reminder).subscribe(
       (response) => {
-        Swal.fire('Success', 'Colaborador Editado com Sucesso', 'success');
+        Swal.fire('Success', 'Lembrete Editado com Sucesso', 'success');
         this.reminderId = null;
         this.getReminder();
       },
       (error) => {
-        Swal.fire('Error', 'Não foi possível editar o Colaborador', 'error');
+        Swal.fire('Error', 'Não foi possível editar o Lembrete', 'error');
       }
     );
     
   }
 
+  /**Abre a modal de create/edit */
   openModalReminder(reminder: Reminder) {
     let config = {
       keyboard: false,
@@ -164,6 +172,7 @@ export class ReminderComponent implements OnInit {
     modalRef.hide();
   }
 
+  /** Verifica se a modal aberta foi para criação ou edição */
   checkSaveOrEdit()
   {
     this.closeModal(this.modalReminderRef);
